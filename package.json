@@ -1,0 +1,11 @@
+{
+  "name": "football-quiz",
+  "version": "1.0.0",
+  "description": "Serverless stack football quiz - server api",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Mathias Bergqvist",
+  "license": "ISC"
+}
