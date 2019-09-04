@@ -1,0 +1,81 @@
+service: football-quiz-api
+
+# Create an optimized package for our functions
+package:
+    individually: true
+
+plugins:
+    - serverless-bundle # Package our functions with Webpack
+    - serverless-offline
+
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  # We want to toggle between dev and prod stages.
+  stage: ${opt:stage, self:provider.stage}
+  # Set the table name here so we can use it while testing locally
+  tableName: ${self:custom.stage}-teams
+  # Load our secret environment variables based on the current stage.
+  # Fallback to default if it is not in prod.
+  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
+
+
+provider:
+    name: aws
+    runtime: nodejs10.13
+    stage: dev
+    region: eu-west-1
+
+
+    # These environment variables are made available to our functions
+    # under process.env.
+    environment:
+      tableName: ${self:custom.tableName}
+      stripeSecretKey: ${self:custom.environment.stripeSecretKey}
+
+    
+    # 'iamRoleStatements' defines the permission policy for the Lambda function.
+    # In this case Lambda functions are granted with permissions to access DynamoDB.
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - dynamodb:DescribeTable
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+          # Restrict our IAM role permissions to
+          # the specific table for the stage
+          Resource:
+            - "Fn::GetAtt": [ TeamsTable, Arn ]
+
+functions:
+    # Defines an HTTP API endpoint that calls the main function in create.js
+    # - path: url path is /teams
+    # - method: POST request
+    # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+    #     domain api call
+    # - authorizer: authenticate using the AWS IAM role
+    get:
+        # Defines an HTTP API endpoint that calls the main function in get.js
+        # - path: url path is /teams/{id}
+        # - method: GET request
+        handler: get.main
+        events:
+            - http:
+                  path: team/{id}
+                  method: get
+                  cors: true
+                  # authorizer: aws_iam
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
+
+
+
