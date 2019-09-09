@@ -19,6 +19,14 @@ service: football-quiz-api
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+# Create an optimized package for our functions
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs10.x
@@ -58,13 +66,13 @@ provider:
 
 functions:
   get:
-    handler: team.main
+    handler: get-team.main
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
     events:
       - http:
-          path: team
+          path: team/{id}
           method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
