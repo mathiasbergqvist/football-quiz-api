@@ -74,6 +74,12 @@ functions:
       - http:
           path: team/{id}
           method: get
+  list:
+    handler: list-teams.main
+    events:
+        - http:
+            path: teams
+            method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
