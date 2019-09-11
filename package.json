@@ -4,7 +4,8 @@
   "description": "Serverless stack football quiz - server api",
   "main": "index.js",
   "scripts": {
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "test:local": "sls invoke local --function list"
   },
   "author": "Mathias Bergqvist",
   "license": "ISC",
@@ -12,5 +13,9 @@
     "aws-sdk": "^2.518.0",
     "serverless-bundle": "^1.2.3",
     "serverless-offline": "^5.10.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "node-fetch": "^2.6.0"
   }
 }

@@ -52,8 +52,8 @@ provider:
         - "Fn::GetAtt": [ TeamsTable, Arn ]
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    API_KEY: ${self:custom.environment.API_KEY}
 
 # you can add packaging information here
 #package:
@@ -80,6 +80,12 @@ functions:
         - http:
             path: teams
             method: get
+  team:
+    handler: api-test.main
+    events:
+      - http:
+          path: test
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
