@@ -27,6 +27,9 @@ plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
 
+custom:
+  environment: ${file(env.yml)}
+
 provider:
   name: aws
   runtime: nodejs10.x
@@ -116,8 +119,8 @@ functions:
 #            path: /hello
 
 #    Define function environment variables here
-#    environment:
-#      variable2: value2
+environment:
+  API_KEY: ${self:custom.environment.API_KEY}
 
 # you can add CloudFormation resource templates here
 resources:
