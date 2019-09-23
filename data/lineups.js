@@ -1,5 +1,5 @@
 export default {
-    0: {
+    1: {
         goal_keeper: [
             {
                 player: 882,
