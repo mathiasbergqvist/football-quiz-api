@@ -9,7 +9,22 @@ export const getTeam = async teamId => {
             "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
             Accept: "application/json"
         }
-    });
-    const data = await response.json();
-    return data;
+    })
+    .then(data => data.json())
+    .then(res => res.api.teams);
+    return response;
+};
+
+export const getSquad = async (teamId, season) => {
+    const response = await fetch(`${API_ENDPOINT}/players/squad/${teamId}/${season}`, {
+        method: "GET",
+        headers: {
+            "X-RapidAPI-Key": process.env.API_KEY,
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
+            Accept: "application/json"
+        }
+    })
+    .then(data => data.json())
+    .then(res => res.api.players);
+    return response;
 };
