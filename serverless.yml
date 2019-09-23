@@ -68,8 +68,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  get:
-    handler: get-team.main
+  team:
+    handler: team.main
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -77,18 +77,12 @@ functions:
       - http:
           path: team/{id}
           method: get
-  list:
-    handler: list-teams.main
+  teams:
+    handler: teams.main
     events:
         - http:
             path: teams
             method: get
-  team:
-    handler: api-test.main
-    events:
-      - http:
-          path: test
-          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
