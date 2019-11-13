@@ -14,7 +14,7 @@ export async function main(event, context) {
   };
   try {
     const teamInfo = await call("get", params);
-    const squad = await getSquad(teamInfo.Item.apiId, "2018-2019");
+    const squad = await getSquad(teamInfo.Item.apiId, "2019-2020");
     const key = findKey(lineups, (item, index) => index === teamId);
     if (teamInfo.Item) {
       return success({

@@ -35,16 +35,16 @@ export default {
     ],
     midfield_offense: [
         {
-            player: 19329,
-            number: 23
+            player: 908,
+            number: 9
         },
         {
             player: 900,
             number: 14
         },
         {
-            player: 908,
-            number: 9
+            player: 19329,
+            number: 21
         }
     ],
     striker: [
